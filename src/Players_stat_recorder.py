@@ -25,9 +25,9 @@ class Players_stat_recorder:
 
     def calculate_clean_sheet(self, row):
         if row[4] == row[8]:
-            row.append(int(row[6] == "0"))
+            row.append(int(row[6] == "0" and int(row[11]) >= 60))
         else:
-            row.append(int(row[5] == "0"))
+            row.append(int(row[5] == "0" and int(row[11]) >= 60))
 
     def calculate_points(self, row):
         points = 0
