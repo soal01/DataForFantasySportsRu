@@ -1,3 +1,5 @@
+import os.path
+
 
 class Players_stat_parser:
     def __init__(self, filename):
@@ -50,6 +52,12 @@ class Players_stat_parser:
             self.string = self.string[pos:]
             return data
 
+    def parse_league(self):
+        pos = self.string.find("<")
+        ans = self.string[:pos]
+        self.string = self.string[pos:]
+        return ans
+
     def parse_match(self):
         data = []
         self.cut("\"name-td alLeft bordR\">")
@@ -58,6 +66,12 @@ class Players_stat_parser:
         self.cut_n_symbols(2)
         data.append(self.parse_date())
 
+        self.cut("<a")
+        self.cut(">")
+        self.cut_n_symbols(1)
+        league = self.parse_league()
+        if league != 'Россия. Премьер-лига':
+            return None
         is_his_team_home = False
         self.cut("\"owner-td\"")
         self.cut("href")
@@ -120,8 +134,9 @@ class Players_stat_parser:
             link = name.pop()
             if link.find("tags") != -1:
                 link = link.split("/")[1]
-            data = self.parse_player(f"{names_dir}/{link}.html")
-            for el in data:
-                new_row = name + el
-                rows.append(new_row)
+            if os.path.exists(f"{names_dir}/{link}.html"):
+                data = self.parse_player(f"{names_dir}/{link}.html")
+                for el in data:
+                    new_row = name + el
+                    rows.append(new_row)
         return rows

@@ -1,5 +1,6 @@
 import requests
 import time
+import os.path
 
 URL_H2H = "https://fantasy-h2h.ru/analytics/fantasy_players_statistics"
 URL_SPORTS_RU = "https://sports.ru/"
@@ -29,7 +30,8 @@ class Players_stats_and_names_loader:
             new_link = link
             if new_link.find("tags") != -1:
                 new_link = link.split("/")[1]
-            self.load_file(f"{URL_SPORTS_RU}{link}/stat/?s={self.id_of_season}&t=31",
-                           f"{self.dir_of_season}/{new_link}.html")
+            if not os.path.exists(f"{self.dir_of_season}/{new_link}.html"):
+                self.load_file(f"{URL_SPORTS_RU}{link}/stat/?s={self.id_of_season}&t=31",
+                               f"{self.dir_of_season}/{new_link}.html")
 
 

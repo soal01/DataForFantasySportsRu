@@ -61,21 +61,21 @@ loader.load_names()
 '''
 
 '''
-parser = Players_name_parser_from_fantasyh2h("src/html_files/2018_2019_rpl/players.html")
-names = parser.get_all_names(seasons['2018-2019'])
+parser = Players_name_parser_from_fantasyh2h("src/html_files/2019_2020_rpl/players.html")
+names = parser.get_all_names(seasons['2019-2020'])
 links = []
 for name in names:
     links.append(name[-1])
-loader = Players_stats_and_names_loader(seasons['2018-2019'])
+loader = Players_stats_and_names_loader(seasons['2019-2020'])
 loader.load_stats(links)
 '''
 
 
-parser = Players_name_parser_from_fantasyh2h("src/html_files/2018_2019_rpl/players.html")
-names = parser.get_all_names(seasons['2018-2019'])
-parser = Players_stat_parser("src/html_files/2018_2019_rpl/akinfeev.html")
-rows = parser.get_rows(seasons['2018-2019']["dir_of_season"], names)
-recorder = Players_stat_recorder("src/csv_files/2018-2019_rpl.csv")
+parser = Players_name_parser_from_fantasyh2h("src/html_files/2017_2018_rpl/players.html")
+names = parser.get_all_names(seasons['2017-2018'])
+parser = Players_stat_parser("src/html_files/2017_2018_rpl/akinfeev.html")
+rows = parser.get_rows(seasons['2017-2018']["dir_of_season"], names)
+recorder = Players_stat_recorder("src/csv_files/2017-2018_rpl.csv")
 for row in rows:
     print(row)
     recorder.calculate_clean_sheet(row)
